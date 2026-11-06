@@ -111,7 +111,7 @@ class Organization {
 }
 
 class Activity {
-  final String id, title, orgId, category, city, address, time, description;
+  final String id, title, orgId, category, city, address, time, description, imageUrl;
   final ActivityType type;
   final bool isOnline;
   final DateTime start, end, deadline, createdAt;
@@ -142,6 +142,7 @@ class Activity {
     required this.agenda,
     required this.createdAt,
     this.createdBy,
+    this.imageUrl = '',
   });
 
   String get locationLabel => isOnline ? 'Online' : (city.isEmpty ? address : city);
@@ -169,6 +170,7 @@ class Activity {
         'agenda': agenda,
         'createdAt': createdAt.toIso8601String(),
         'createdBy': createdBy,
+        'imageUrl': imageUrl,
       };
 
   factory Activity.fromJson(Map<String, dynamic> j) => Activity(
@@ -194,6 +196,7 @@ class Activity {
         agenda: List<String>.from(j['agenda'] ?? []),
         createdAt: DateTime.tryParse(j['createdAt'] ?? '') ?? DateTime.now(),
         createdBy: j['createdBy'],
+        imageUrl: j['imageUrl'] ?? '',
       );
 }
 

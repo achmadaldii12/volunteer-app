@@ -129,32 +129,33 @@ class ActivityCover extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = categoryInfo(a.category);
-    return Container(
+    return SizedBox(
       height: height,
       width: double.infinity,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [c.color, Color.lerp(c.color, Colors.black, 0.4)!],
-        ),
-      ),
-      child: ClipRect(
-        child: Stack(children: [
-          Positioned(
-              right: -18,
-              bottom: -26,
-              child: Icon(c.icon, size: height * 0.95, color: Colors.white.withAlpha(40))),
-          Positioned(
-              left: -34,
-              top: -34,
-              child: Container(
-                  width: 120,
-                  height: 120,
-                  decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white.withAlpha(22)))),
-          if (overlay != null) Positioned.fill(child: overlay!),
-        ]),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          // Menampilkan gambar aset jika imageUrl tersedia, jika kosong/error tampilkan warna kategori
+          a.imageUrl.isNotEmpty
+              ? Image.asset(
+                  a.imageUrl,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    final c = categoryInfo(a.category).color;
+                    return Container(color: c);
+                  },
+                )
+              : Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [categoryInfo(a.category).color, Color.lerp(categoryInfo(a.category).color, Colors.black, 0.4)!],
+                    ),
+                  ),
+                ),
+          if (overlay != null) overlay!,
+        ],
       ),
     );
   }
@@ -325,7 +326,6 @@ class CountUp extends StatelessWidget {
         builder: (_, v, __) => Text('${fmtNum(v.round())}$suffix', style: style),
       );
 }
-
 
 Color typeColor(ActivityType t) {
   switch (t) {

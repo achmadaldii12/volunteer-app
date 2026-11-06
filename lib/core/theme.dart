@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../models/models.dart';
 
 class AppColors {
@@ -77,18 +78,25 @@ ThemeData buildTheme(Brightness b) {
     useMaterial3: true,
     colorScheme: scheme,
     scaffoldBackgroundColor: dark ? const Color(0xFF121212) : Colors.white,
+    
+    // Menerapkan font modern Plus Jakarta Sans secara global ke seluruh teks aplikasi
+    fontFamily: GoogleFonts.plusJakartaSans().fontFamily,
+    textTheme: GoogleFonts.plusJakartaSansTextTheme(
+      ThemeData(brightness: b).textTheme,
+    ),
+
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
         minimumSize: const Size(0, 50),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-        textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+        textStyle: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.w700, fontSize: 15),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         minimumSize: const Size(0, 50),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-        textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+        textStyle: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.w600, fontSize: 15),
       ),
     ),
     navigationBarTheme: NavigationBarThemeData(
@@ -110,7 +118,6 @@ extension Ui on BuildContext {
   bool get isWide => screenW >= 900;
 }
 
-/// Gaya kolom isian seragam (tanpa bergantung pada API tema yang berbeda antar versi Flutter).
 InputDecoration inputDeco({
   String? labelText,
   String? hintText,

@@ -32,7 +32,6 @@ class _HomeScreenState extends State<HomeScreen> {
         Stack(clipBehavior: Clip.none, children: [
           Container(
             width: double.infinity,
-            // Tinggi diperbesar agar area gambar jauh lebih leluasa ke bawah
             height: narrow ? 500 : 580,
             decoration: BoxDecoration(
               color: Colors.red,
@@ -52,7 +51,6 @@ class _HomeScreenState extends State<HomeScreen> {
               Positioned(left: 60, top: 40, child: Icon(Icons.favorite, size: 90, color: Colors.white.withAlpha(16))),
               Center(
                 child: Padding(
-                  // Padding atas ditambah agar posisi teks dan tombol berada persis di tengah-tengah layar dengan rapi
                   padding: EdgeInsets.fromLTRB(24, narrow ? 90 : 120, 24, narrow ? 60 : 80),
                   child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                     Text('Jadilah relawan, mulai dari sini',
@@ -128,15 +126,37 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ]),
             );
+            
             final right = Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               const Text('Kenali layanan Volunteer', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800)),
               const SizedBox(height: 16),
-              ResponsiveWrap(minItemWidth: 190, maxCols: 3, spacing: 14, children: [
-                _ServiceCard(Icons.volunteer_activism, 'Jadi Relawan', 'Temukan dan ikuti aktivitas sosial sesuai minatmu.', () => nav.go(NavIndex.activities)),
-                _ServiceCard(Icons.apartment, 'Cari Organisasi', 'Kenali organisasi dan ikuti kabar terbarunya.', () => nav.go(NavIndex.organizations)),
-                _ServiceCard(Icons.handshake, 'Cari Relawan', 'Penyelenggara dapat membuat aktivitas dan merekrut relawan.', () => nav.go(NavIndex.mine)),
-              ]),
+              LayoutBuilder(builder: (context, constraints) {
+                if (constraints.maxWidth < 650) {
+                  return Column(
+                    children: [
+                      _ServiceCard(Icons.volunteer_activism, 'Jadi Relawan', 'Temukan dan ikuti aktivitas sosial sesuai minatmu.', () => nav.go(NavIndex.activities)),
+                      const SizedBox(height: 14),
+                      _ServiceCard(Icons.apartment, 'Cari Organisasi', 'Kenali organisasi dan ikuti kabar terbarunya.', () => nav.go(NavIndex.organizations)),
+                      const SizedBox(height: 14),
+                      _ServiceCard(Icons.handshake, 'Cari Relawan', 'Penyelenggara dapat membuat aktivitas dan merekrut relawan.', () => nav.go(NavIndex.mine)),
+                    ],
+                  );
+                }
+                return IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(child: _ServiceCard(Icons.volunteer_activism, 'Jadi Relawan', 'Temukan dan ikuti aktivitas sosial sesuai minatmu.', () => nav.go(NavIndex.activities))),
+                      const SizedBox(width: 14),
+                      Expanded(child: _ServiceCard(Icons.apartment, 'Cari Organisasi', 'Kenali organisasi dan ikuti kabar terbarunya.', () => nav.go(NavIndex.organizations))),
+                      const SizedBox(width: 14),
+                      Expanded(child: _ServiceCard(Icons.handshake, 'Cari Relawan', 'Penyelenggara dapat membuat aktivitas dan merekrut relawan.', () => nav.go(NavIndex.mine))),
+                    ],
+                  ),
+                );
+              }),
             ]);
+
             if (stacked) return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [left, const SizedBox(height: 28), right]);
             return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Expanded(flex: 4, child: left),
@@ -285,19 +305,22 @@ class _ServiceCard extends StatelessWidget {
   Widget build(BuildContext context) => AppCard(
         onTap: onTap,
         padding: const EdgeInsets.all(20),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          CircleAvatar(radius: 28, backgroundColor: AppColors.primary.withAlpha(24), child: Icon(icon, color: AppColors.primary, size: 28)),
-          const SizedBox(height: 16),
-          Text(title, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800)),
-          const SizedBox(height: 6),
-          Text(text, style: TextStyle(color: context.muted, height: 1.45, fontSize: 14)),
-          const SizedBox(height: 12),
-          const Row(children: [
-            Text('Buka', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w700)),
-            SizedBox(width: 4),
-            Icon(Icons.arrow_forward, size: 16, color: AppColors.primary),
+        child: IntrinsicHeight(
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            CircleAvatar(radius: 28, backgroundColor: AppColors.primary.withAlpha(24), child: Icon(icon, color: AppColors.primary, size: 28)),
+            const SizedBox(height: 16),
+            Text(title, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800)),
+            const SizedBox(height: 6),
+            Text(text, style: TextStyle(color: context.muted, height: 1.45, fontSize: 14)),
+            const Spacer(),
+            const SizedBox(height: 16),
+            const Row(children: [
+              Text('Buka', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w700)),
+              SizedBox(width: 4),
+              Icon(Icons.arrow_forward, size: 16, color: AppColors.primary),
+            ]),
           ]),
-        ]),
+        ),
       );
 }
 

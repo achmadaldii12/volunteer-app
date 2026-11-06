@@ -42,7 +42,6 @@ class AppState extends ChangeNotifier {
   int _counter = 0;
   String _id(String p) => '${p}_${DateTime.now().microsecondsSinceEpoch}_${_counter++}';
 
-  // ---------------------------------------------------------------- init
   Future<void> init() async {
     final p = await SharedPreferences.getInstance();
     final raw = p.getString(_key);
@@ -116,7 +115,6 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ---------------------------------------------------------------- app
   void finishOnboarding() {
     onboarded = true;
     _commit();
@@ -127,7 +125,6 @@ class AppState extends ChangeNotifier {
     _commit();
   }
 
-  // ---------------------------------------------------------------- auth
   AppUser? get user => sessionId == null ? null : users.where((u) => u.id == sessionId).firstOrNull;
 
   String? login(String email, String password) {
@@ -218,7 +215,6 @@ class AppState extends ChangeNotifier {
     _commit();
   }
 
-  // ---------------------------------------------------------------- data
   List<Activity> get allActivities => [
         ...seedActivities.where((a) => !hiddenSeed.contains(a.id)),
         ...customActivities,
@@ -308,7 +304,6 @@ class AppState extends ChangeNotifier {
       allActivities.where((a) => a.orgId == orgId).toList()
         ..sort((a, b) => b.start.compareTo(a.start));
 
-  /// Statistik organisasi: (jumlah aktivitas, jumlah relawan, total jam kontribusi)
   (int, int, int) orgStats(String orgId) {
     var vol = 0, hours = 0;
     final acts = activitiesOfOrg(orgId);
@@ -363,7 +358,6 @@ class AppState extends ChangeNotifier {
     return list.take(4).toList();
   }
 
-  // ---------------------------------------------------------------- registrations
   Registration? regFor(String userId, String activityId) => regs
       .where((r) => r.userId == userId && r.activityId == activityId && r.status != RegStatus.cancelled)
       .firstOrNull;
@@ -443,7 +437,6 @@ class AppState extends ChangeNotifier {
     _commit();
   }
 
-  // ---------------------------------------------------------------- stats
   List<Registration> attendedOf(String userId) =>
       regs.where((r) => r.userId == userId && r.status == RegStatus.attended).toList();
 
@@ -464,7 +457,6 @@ class AppState extends ChangeNotifier {
     return s;
   }
 
-  // ---------------------------------------------------------------- bookmarks & follows
   bool isBookmarked(String activityId) => user != null && bookmarks.contains('${user!.id}:$activityId');
 
   void toggleBookmark(String activityId) {
@@ -496,7 +488,6 @@ class AppState extends ChangeNotifier {
 
   int followingCount(String userId) => follows.where((k) => k.startsWith('$userId:')).length;
 
-  // ---------------------------------------------------------------- notifications
   void _notify(String userId, String title, String body, String kind) {
     notifs.add(Notif(id: _id('n'), userId: userId, title: title, body: body, kind: kind));
   }
@@ -517,7 +508,6 @@ class AppState extends ChangeNotifier {
     _commit();
   }
 
-  // ---------------------------------------------------------------- organizer
   List<Activity> managedBy(AppUser u) {
     final orgId = u.orgId;
     if (orgId == null) return [];
@@ -535,7 +525,6 @@ class AppState extends ChangeNotifier {
       if (i >= 0) {
         customActivities[i] = a;
       } else {
-        // activity bawaan: sembunyikan versi lama lalu simpan salinan baru
         hiddenSeed.add(a.id);
         customActivities.add(a);
       }

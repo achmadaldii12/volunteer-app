@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:volunteer_app/models/models.dart';
+import 'package:frontend/models/models.dart';
 
 void main() {
   test('Registration JSON round-trip', () {

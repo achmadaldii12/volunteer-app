@@ -183,6 +183,7 @@ class SeedData {
     required String desc,
     bool online = false,
     List<String>? req,
+    required String imageUrl,
   }) {
     DateTime d(int n) => DateTime(now.year, now.month, now.day).add(Duration(days: n));
     return Activity(
@@ -202,13 +203,13 @@ class SeedData {
       baseJoined: joined,
       hours: hours,
       description: desc,
-      requirements: req ??
-          [
-            'Berusia minimal 17 tahun',
-            online ? 'Memiliki koneksi internet yang stabil' : 'Sehat jasmani dan rohani',
-            'Berkomitmen hadir sesuai jadwal',
-            'Bersedia mengikuti arahan koordinator'
-          ],
+      imageUrl: imageUrl,
+      requirements: req ?? [
+        'Berusia minimal 17 tahun',
+        online ? 'Memiliki koneksi internet yang stabil' : 'Sehat jasmani dan rohani',
+        'Berkomitmen hadir sesuai jadwal',
+        'Bersedia mengikuti arahan koordinator'
+      ],
       benefits: const [
         'E-sertifikat kontribusi',
         'Konsumsi dan perlengkapan kegiatan',
@@ -218,7 +219,6 @@ class SeedData {
       skills: _skills[category] ?? const ['Kerja tim'],
       agenda: _agenda(type),
       createdAt: d(-(40 - int.parse(id.substring(1)) * 2)),
-      createdBy: null,
     );
   }
 
@@ -237,6 +237,7 @@ class SeedData {
             joined: 27,
             hours: 5,
             deadline: 2,
+            imageUrl: 'assets/image/gambar event 1.jpg',
             desc:
                 'Bergabunglah menyiapkan dan membagikan 500 paket sembako untuk keluarga prasejahtera. Relawan akan bertugas mengemas, mendata penerima, dan mengantar paket langsung ke rumah warga.'),
         _a(now,
@@ -253,6 +254,7 @@ class SeedData {
             joined: 52,
             hours: 5,
             deadline: 7,
+            imageUrl: 'assets/image/gambar event 2.jpg',
             desc:
                 'Mari pungut sampah di garis pantai lalu tanam 300 bibit mangrove untuk menahan abrasi. Peralatan dan bibit disediakan, kamu cukup membawa semangat dan botol minum sendiri.'),
         _a(now,
@@ -270,6 +272,7 @@ class SeedData {
             joined: 11,
             hours: 2,
             deadline: 20,
+            imageUrl: 'assets/image/gambar event 3.jpg',
             desc:
                 'Dampingi anak usia 6-10 tahun belajar membaca, menulis, dan berhitung dengan cara menyenangkan. Materi dan alat peraga disiapkan tim, relawan tinggal mengajar bersama.'),
         _a(now,
@@ -286,6 +289,7 @@ class SeedData {
             joined: 25,
             hours: 4,
             deadline: 5,
+            imageUrl: 'assets/image/gambar event 4.jpg',
             desc:
                 'Membantu petugas kesehatan menimbang, mengukur tinggi badan balita, dan mencatat hasilnya. Cocok untuk mahasiswa kesehatan maupun umum yang peduli isu gizi anak.'),
         _a(now,
@@ -302,6 +306,7 @@ class SeedData {
             joined: 9,
             hours: 5,
             deadline: 9,
+            imageUrl: 'assets/image/gambar event 5.jpg',
             desc:
                 'Bantu memandikan, memberi makan, dan mendokumentasikan kucing yang siap diadopsi. Kamu juga akan belajar tentang adopsi yang bertanggung jawab dan sterilisasi.'),
         _a(now,
@@ -319,6 +324,7 @@ class SeedData {
             joined: 41,
             hours: 4,
             deadline: 1,
+            imageUrl: 'assets/image/gambar event 6.jpg',
             desc:
                 'Posko membutuhkan relawan untuk menyortir pakaian, makanan, dan obat-obatan donasi sebelum dikirim ke lokasi bencana. Kamu bebas memilih shift sesuai waktu luangmu.'),
         _a(now,
@@ -336,6 +342,7 @@ class SeedData {
             joined: 12,
             hours: 3,
             deadline: 15,
+            imageUrl: 'assets/image/gambar event 7.jpg',
             desc:
                 'Dampingi latihan teater dan musik anak jalanan hingga pentas akhir. Relawan dapat membantu sebagai pelatih, penata panggung, atau dokumentasi.'),
         _a(now,
@@ -353,6 +360,7 @@ class SeedData {
             hours: 2,
             deadline: 5,
             online: true,
+            imageUrl: 'assets/image/gambar event 8.jpg',
             desc:
                 'Pelajari cara memasarkan produk lewat media sosial, marketplace, dan WhatsApp Business. Webinar ini gratis dan terbuka untuk pelaku UMKM maupun relawan pendamping.'),
         _a(now,
@@ -371,6 +379,7 @@ class SeedData {
             hours: 20,
             deadline: 10,
             online: true,
+            imageUrl: 'assets/image/gambar event 1.jpg',
             desc:
                 'Bergabung dengan tim desainer dan developer untuk membuat website profil dan pemesanan paket wisata sebuah desa. Cocok untuk portofolio dan latihan kerja tim.',
             req: [
@@ -393,6 +402,7 @@ class SeedData {
             hours: 2,
             deadline: 12,
             online: true,
+            imageUrl: 'assets/image/gambar event 2.jpg',
             desc:
                 'Kelas daring untuk remaja yang ingin berlatih menulis cerpen dan puisi. Relawan bertugas sebagai moderator ruang diskusi dan pendamping kelompok kecil.'),
         _a(now,
@@ -410,6 +420,7 @@ class SeedData {
             joined: 14,
             hours: 3,
             deadline: 30,
+            imageUrl: 'assets/image/gambar event 3.jpg',
             desc:
                 'Bantu warga menimbang, memilah, dan mencatat setoran sampah anorganik setiap minggu. Kamu juga ikut mengedukasi warga tentang cara memilah sampah yang benar.'),
         _a(now,
@@ -426,6 +437,7 @@ class SeedData {
             joined: 8,
             hours: 4,
             deadline: 13,
+            imageUrl: 'assets/image/gambar event 4.jpg',
             desc:
                 'Temani para lansia berolahraga ringan, mengobrol, dan menikmati hiburan musik. Kehadiranmu sangat berarti bagi mereka yang jarang dikunjungi keluarga.'),
         _a(now,
@@ -442,6 +454,7 @@ class SeedData {
             joined: 30,
             hours: 4,
             deadline: -14,
+            imageUrl: 'assets/image/gambar event 5.jpg',
             desc:
                 'Membagikan masker dan brosur cuci tangan kepada pedagang dan pengunjung pasar tradisional.'),
         _a(now,
@@ -458,6 +471,7 @@ class SeedData {
             joined: 100,
             hours: 5,
             deadline: -33,
+            imageUrl: 'assets/image/gambar event 6.jpg',
             desc:
                 'Aksi bersama menanam seribu bibit pohon di lahan kritis untuk menjaga daerah resapan air.'),
       ];
